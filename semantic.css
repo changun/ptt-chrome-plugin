@@ -24092,7 +24092,7 @@ th {
 
 .ui[class*="very wide"].left.sidebar,
 .ui[class*="very wide"].right.sidebar {
-  width: 475px;
+  width: 450px;
 }
 
 /*******************************
@@ -24113,8 +24113,8 @@ th {
 
 .animating.ui.overlay.sidebar,
 .ui.visible.overlay.sidebar {
-  -webkit-transition: -webkit-transform 500ms ease;
-  transition: transform 500ms ease;
+  -webkit-transition: -webkit-transform 100ms ease;
+  transition: transform 100ms ease;
 }
 
 /*--- Left ---*/
