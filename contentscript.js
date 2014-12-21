@@ -2,9 +2,19 @@
 var $body = $('body');
 var url = new URI(window.location.href).hostname();
 
-var $articleContainer,$bottom,$headline, $articleContent;
-var headlineTop,launcherTopPos,scrollStopPos;
-/** News site specific selectors **/
+// the following DOM variables need to be initialized using jQuery selector.
+var $articleContainer,// (DEPRECATED) the container that contain the whole article. This is not used anymore!
+    $bottom,// (DEPRECATED) where to add the bottom launcher button. (We don't do a bottom launcher button anymore!)
+    $headline,// the DOM that contains the title of the article.
+    $articleContent; // the DOM that contains the content of the article.
+
+
+// the following constant variables are all numeric values and need to be initialized for each website.
+var headlineTop, // the top value of the launcher button,
+    launcherTopPos; // the top value of the launcher button after it has been squeezed to the upper left corner by scrolling;
+
+
+/** Initialization for each specific News Website**/
 if(url.indexOf('yahoo') >=0) {
     // yahoo
      $articleContainer = $('.yog-grid.yog-24u');
@@ -32,7 +42,7 @@ if(url.indexOf('yahoo') >=0) {
      launcherTopPos = 10;
 
 }else if (url.indexOf('udn') >= 0){
-    // chinatimes
+    // udn
     $articleContainer = $('table.mainbg').first();
     //$bottom = $('.news_story');
     $headline = $('.story_title');
@@ -41,7 +51,7 @@ if(url.indexOf('yahoo') >=0) {
     launcherTopPos = 10;
 
 }else if (url.indexOf('ltn') >= 0){
-    // ltn
+    // liberty
     $articleContainer = $('#main');
     //$bottom = $('.news_story');
     $headline = $('h1');
@@ -49,18 +59,20 @@ if(url.indexOf('yahoo') >=0) {
     $articleContent = $('#newstext p');
     launcherTopPos = 10;
 }else if(url.indexOf('apple') >= 0){
+    // apple daily
     $articleContainer = $('#maincontent');
     $headline = $('#h1');
     headlineTop = $headline.position()["top"] + 10;
     $articleContent = $("#summary");
     launcherTopPos = 10;
 }
+
 /** article container margin **/
 var origMargin = $articleContainer.css('margin');
 var origMarginLeft = $articleContainer.css('margin-left');
 var modifyContentMargin = (($body.width() - $articleContainer.innerWidth())/2) < 400;
 
-/** request parameter **/
+/** the parameter that will be sent to the search engine **/
 var title = $headline.text();
 var articleContent = $articleContent.text();
 var request = {"title": title,
