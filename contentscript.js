@@ -84,7 +84,7 @@ var launcherTitle = '<i class="announcement icon"></i><span class="ui-text">看�
 
 // create plugin DOMs
 var $leftLauncher = $('<div id="launcher" class="ui black small launch right attached fixed button">'+launcherTitle+'</div>');
-var $menu = $('<div class="ui vertical plugin-menu sidebar inverted wide">\n    <div class="header item">\n        <i id="lock" class="icon unlock alternate"></i>\n        相關文章\n    </div>\n\n</div>\n        ');
+var $menu = $('<div class="ui vertical plugin-menu sidebar inverted very wide right">\n    <div class="header item">\n        <i id="lock" class="icon unlock alternate"></i>\n        相關文章\n    </div>\n\n</div>\n        ');
 var $bottomLauncher = $('<div id="launcher" class="ui black small button">'+launcherTitle+'</div>');
 
 
@@ -158,9 +158,17 @@ $.ajax
                 var title = e.title ? e.title : e.subject;
                 var ago = moment(e.last_modified).locale("zh-tw").fromNow();
                 var popup = e.author + '於' + board + '板 ' + ago ;
+                var popularity;
+                if(e.popularity >= 100){
+                    popularity = '<span class="push-count f1 hl">爆</span>';
+                }else if(e.popularity >= 10){
+                    popularity = '<span class="push-count hl f3">'+e.popularity +'</span>'
+                }else{
+                    popularity = '<span class="push-count hl f2">'+e.popularity +'</span>'
+                }
                 $('<a class="post item r-ent" target="_black" href="' + href + '" data-content="' + popup + '"></a>')
                     //.append('<span class="hl f3">'+ e.popularity + '</span>')
-                    .append(e.popularity > 50? '<span class="f1 hl">爆</span>' : '')
+                    .append(popularity)
                     .append('<span class="ui title">' + title +'</span>')
                     .append('<span class="ui date detail"> ' + ago +'</span>')
                     .appendTo($menu);
@@ -186,6 +194,8 @@ $.ajax
                     .append('<span class="f3 push-content">: ' + content +'</span>')
                     .appendTo($menu);
             });
+            $('<a class="item"></a>')
+                .appendTo($menu);
 
         }
 

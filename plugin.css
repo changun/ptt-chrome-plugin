@@ -1,8 +1,8 @@
-.menu::-webkit-scrollbar {
+.plugin-menu::-webkit-scrollbar {
     width: 10px;
 }
 
-.menu::-webkit-scrollbar-track {
+.plugin-menu::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 5px;
     background: dimgray;
@@ -19,6 +19,11 @@
     width: 400px
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
+.plugin-menu .item span.push-count{
+    display: inline-block;
+    width: 21px;
+    text-align: center;
+}
 .plugin-menu .item{
     font-size: 14px !important;
 }
@@ -32,17 +37,19 @@
     color: #555;
     font-size: 13px;
 }
+.plugin-menu .header.item{
+    font-size: 15.5px  !important;
+}
 
 
-
-.ui.vertical.menu.sidebar{
-    box-shadow: rgb(68, 63, 63) 5px 3px 5px;
+.ui.vertical.plugin-menu.sidebar{
+    box-shadow: rgb(68, 63, 63) -5px 3px 5px;
 }
 
 .fixed.launch.button {
     position: absolute;
     top: 250px;
-    left: -1px;
+    right: -1px;
 
     width: 160px;
     height: auto;
