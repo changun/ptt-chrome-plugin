@@ -1,0 +1,41 @@
+{
+  "name" : "看看鄉民怎麼說?",
+  "version" : "1.0.5",
+  "description" : "讓你看各大新聞網時同時看ptt鄉民對新聞的討論和C相關文章?",
+  "icons" : {
+    "16" : "sandwich-16.png",
+    "48" : "sandwich-48.png",
+    "128" : "sandwich-128.png"
+  },
+    "permissions": [
+        "storage"
+    ],
+  "content_scripts" : [
+    {
+      "matches" : [ 
+         "http://tw.news.yahoo.com/*.html",
+          "https://tw.news.yahoo.com/*.html",
+          "http://www.nownews.com/n/*",
+          "https://www.nownews.com/n/*",
+          "http://www.chinatimes.com/realtimenews/*",
+          "https://www.chinatimes.com/realtimenews/*",
+          "http://udn.com/*.shtml",
+          "https://udn.com/*.shtml",
+          "http://news.ltn.com.tw/news/*",
+          "https://news.ltn.com.tw/news/*",
+          "http://www.appledaily.com.tw/realtimenews/article/*",
+          "https://www.appledaily.com.tw/realtimenews/article/*"
+
+      ],
+      "web_accessible_resources": [
+            "assets/images/*",
+            "assets/fonts/*"
+      ],
+      "css": ["semantic.css", "plugin.css", "bbs.css"],
+      "js" : ["jquery-2.1.3.min.js", "semantic.min.js", "moment-with-langs.min.js", "URI.js", "contentscript.js"],
+      "run_at" : "document_end",
+      "all_frames" : false
+    }
+  ],
+  "manifest_version": 2
+}
