@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+@import url(//fonts.googleapis.com/css?family=Inconsolata);
+
+/* ansi colors */
+.b0 { background-color: #000; }
+.b1 { background-color: #b00; }
+.b2 { background-color: #0b0; }
+.b3 { background-color: #bb0; }
+.b4 { background-color: #00b; }
+.b5 { background-color: #b0b; }
+.b6 { background-color: #0bb; }
+.b7 { background-color: #bbb; }
+
+.f0 { color: #000; }
+.f1 { color: #900; }
+.f2 { color: #090; }
+.f3 { color: #990; }
+.f4 { color: #009; }
+.f5 { color: #909; }
+.f6 { color: #099; }
+.f7 { color: #999; }
+
+.hl { color: #fff; }
+.hl.f0 { color: #666; }
+.hl.f1 { color: #f66; }
+.hl.f2 { color: #6f6; }
+.hl.f3 { color: #ff6; }
+.hl.f4 { color: #66f; }
+.hl.f5 { color: #f6f; }
+.hl.f6 { color: #6ff; }
+.hl.f7 { color: #fff; }
+
+
+.push {
+    line-height: 130%;
+    white-space: normal;
+    clear: both;
+}
+.push > span {
+    white-space: pre;
+}
+.push-tag {
+    display: inline-block;
+    min-width: 2ex;
+    white-space: normal;
+}
+.push-content {
+}
+.push-ipdatetime {
+    float: right;
+}
+
+
+.r-ent .date {
+    float:right
+
+}
+.r-ent .author {
+
+}
