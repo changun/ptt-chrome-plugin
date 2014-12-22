@@ -1,6 +1,6 @@
 {
   "name" : "看看鄉民怎麼說?",
-  "version" : "1.0.7",
+  "version" : "1.0.8",
   "description" : "讓你看各大新聞網時同時看ptt鄉民對新聞的討論和相關文章?",
   "icons" : {
     "16" : "sandwich-16.png",
@@ -23,8 +23,8 @@
           "https://udn.com/*.shtml",
           "http://news.ltn.com.tw/news/*",
           "https://news.ltn.com.tw/news/*",
-          "http://www.appledaily.com.tw/realtimenews/article/*",
-          "https://www.appledaily.com.tw/realtimenews/article/*"
+          "http://www.appledaily.com.tw/*/article/*",
+          "https://www.appledaily.com.tw/*/article/*"
 
       ],
       "web_accessible_resources": [
@@ -32,7 +32,7 @@
             "assets/fonts/*"
       ],
       "css": ["semantic.css", "plugin.css", "bbs.css"],
-      "js" : ["jquery-2.1.3.min.js", "semantic.min.js", "moment-with-langs.min.js", "URI.js", "contentscript.js"],
+      "js" : ["jquery-2.1.3.min.js", "jquery.mousewheel.js","semantic.min.js", "moment-with-langs.min.js", "URI.js", "contentscript.js"],
       "run_at" : "document_end",
       "all_frames" : false
     }
