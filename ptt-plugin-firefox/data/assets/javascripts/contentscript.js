@@ -219,17 +219,17 @@ function init(ret){
     var $lock = $("#lock");
 
     // check if the sidebar has been locked by the user
-    chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
-        // automatically show the sidebar if the user has chosen to lock it
-        if(ret["lock?"] == 'locked'){
-            $lock.removeClass('unlock').addClass('lock');
-            $menu.sidebar('show');
-            $leftLauncher.addClass('hidden');
-        }else{
-            /** Fade-in the launcher **/
+    // chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
+    //     // automatically show the sidebar if the user has chosen to lock it
+    //     if(ret["lock?"] == 'locked'){
+    //         $lock.removeClass('unlock').addClass('lock');
+    //         $menu.sidebar('show');
+    //         $leftLauncher.addClass('hidden');
+    //     }else{
+    //         /** Fade-in the launcher **/
             $leftLauncher.transition('horizontal flip', '1000ms');
-        }
-    });
+    //     }
+    // });
     $lock.click(function(event){
         var locked = !$lock.hasClass('lock');
         if(locked){
@@ -238,9 +238,9 @@ function init(ret){
         }else{
             $lock.removeClass('lock').addClass('unlock');
         }
-        chrome.storage.local.set({'lock?': locked? 'locked': 'unlocked'}, function(){
-            console.log(locked);
-        });
+        // chrome.storage.local.set({'lock?': locked? 'locked': 'unlocked'}, function(){
+        //     console.log(locked);
+        // });
     });
 
 
