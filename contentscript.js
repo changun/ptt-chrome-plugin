@@ -1,5 +1,6 @@
 
 var $body = $('body');
+var site = "//lifestreams.smalldata.io/ptt";
 var url = new URI(window.location.href).hostname();
 
 // the following DOM variables need to be initialized using jQuery selector.
@@ -68,8 +69,8 @@ $.ajax
 ({
     type: "POST",
     //the url where you want to sent the userName and password to
-    url: 'https://lifestreams.smalldata.io/ptt/search',
-    async: false,
+    url: site + '/search',
+    async: true,
     //json object to sent to the authentication url
     data: JSON.stringify(request),
     success: function (ret) {
@@ -78,7 +79,6 @@ $.ajax
         isComplete();
     }
 });
-
 var launcherTitle = '<i class="announcement icon"></i><span class="ui-text">看看鄉民怎麼說?</span>';
 
 
@@ -94,10 +94,12 @@ $leftLauncher.css({top: headlineTop});
 // sidebar menu
 var $menu = $('<div class="ui vertical plugin-menu sidebar inverted very wide right">\n    <div class="header item">\n        <i id="lock" class="icon unlock alternate"></i>\n        相關文章\n    </div>\n\n</div>\n        ');
 
+// modal
+var $modal =$('<div class="ui modal" id="ptt-modal"><i class="close icon"></i></div>');
 // append the DOMs to the body
 $body.append($menu);
 $body.append($leftLauncher);
-
+$body.append($modal);
 
 // create sidebar
 $menu
@@ -114,10 +116,7 @@ $menu
 
 // set on mouseover handler
 $leftLauncher.on('mouseover', function(event) {
-    // modify article container margin if needed
-    /*if(modifyContentMargin) {
-     $articleContainer.css('margin-left', '410px');
-     }*/
+
     $menu.sidebar('show');
     $leftLauncher.addClass('hidden');
     event.preventDefault();
@@ -159,6 +158,31 @@ function isComplete(){
         init(response);
     }
 }
+var showPost = function (event){
+    var uri = site + "/posts/" + $(this).data('post');
+    $.ajax
+    ({
+        type: "GET",
+        //the url where you want to sent the userName and password to
+        url: uri,
+        async: true,
+        success: function (ret) {
+            var $postContent = $(ret).find('#main-content');
+            var $prevPostContnet = $modal.find('#main-content');
+            if($prevPostContnet.length){
+                $prevPostContnet.replaceWith($postContent);
+            }else{
+                $modal.append($postContent);
+            }
+
+            $modal
+                .modal('setting', 'transition', 'horizontal flip')
+                .modal('show')
+            ;
+        }
+    });
+
+}
 function init(ret){
     /** populate the sidebar content **/
     if(ret.articles.length > 0){
@@ -177,15 +201,26 @@ function init(ret){
             }else{
                 popularity = '<span class="push-count hl f2">'+e.popularity +'</span>'
             }
-            $('<a class="post item r-ent" target="_black" href="' + href + '" ></a>')
+            $('<a class="post item r-ent"></a>')
                 .append(popularity)
                 .append('<span class="ui title">' + title +'</span>')
                 .append('<span class="ui date detail"> ' + ago +'</span>')
-                .appendTo($menu);
+                .data("post", board + '/' + board_id[1])
+                .appendTo($menu)
+                .click(showPost);
         });
+
+
     }
     if(ret.comments){
-        var header = $('<div class="header item"><i class="comment icon"></i>相關評論 -<span class="sub header"> '+ret.comments.title+'</span></div>').appendTo($menu);
+        var board_id = ret.comments._id.split(":");
+        var board = board_id[0];
+        var header =
+                $('<div class="header item" id="comment-header"><i class="comment icon"></i><span class="sub header"> '+ret.comments.title+'</span></div>')
+                .appendTo($menu)
+                .data("post", board + '/' + board_id[1])
+                .click(showPost)
+            ;
         var count = 0;
         ret.comments.pushed.forEach(function(e){
             count ++;

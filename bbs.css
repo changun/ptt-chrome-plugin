@@ -32,6 +32,44 @@
 .hl.f7 { color: #fff; }
 
 
+/* for article*/
+#main-content {
+    position: relative;
+    background-color: #000;
+    white-space: pre;
+    font-size: 24px;
+    font-family: "細明體", "AR PL UMing TW", "Inconsolata", "LiSongPro", monospace;
+    color: #bbb;
+    line-height: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    margin: 0 auto;
+    padding: 0;
+    min-width: 600px;
+    max-width: 1200px;
+}
+#main-content .article-metaline {
+    margin: 0;
+    padding: 0;
+    background-color: #008;
+}
+#main-content .article-meta-value {
+    padding: 0 1ex;
+    background-color: #008;
+    color: #999;
+}
+#main-content .article-meta-tag {
+    padding: 0 1ex;
+    background-color: #999;
+    color: #008;
+}
+#main-content .article-metaline-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #008;
+}
+
 .push {
     line-height: 130%;
     white-space: normal;
