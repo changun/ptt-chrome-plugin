@@ -5,7 +5,7 @@
   "description": "讓你看各大新聞網時同時看ptt鄉民對新聞的討論和相關文章?",
   "author": "changun",
   "license": "MPL 2.0",
-  "version": "1.0.8",
+  "version": "1.0.10",
   "icon": "data/assets/images/sandwich-48.png",
   "icon64": "data/assets/images/sandwich-128.png"
 }
