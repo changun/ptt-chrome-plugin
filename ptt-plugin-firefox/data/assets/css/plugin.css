@@ -1,5 +1,6 @@
 .plugin-menu::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 .plugin-menu::-webkit-scrollbar-track {
@@ -7,17 +8,9 @@
     border-radius: 5px;
     background: dimgray;
 }
-.unlock{
-    cursor: pointer;
-}
-.lock{
-    cursor: pointer;
-}
 .plugin-menu::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background: grey;
-    width: 400px
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 .plugin-menu .item span.push-count{
     display: inline-block;
@@ -41,8 +34,20 @@
     font-size: 15.5px  !important;
 }
 
+#comment-header{
+    cursor: pointer;
+}
+
+.unlock{
+    cursor: pointer;
+}
+.lock{
+    cursor: pointer;
+}
+
 
 .ui.vertical.plugin-menu.sidebar{
+    overflow: hidden;
     box-shadow: rgb(68, 63, 63) -5px 3px 5px;
 }
 

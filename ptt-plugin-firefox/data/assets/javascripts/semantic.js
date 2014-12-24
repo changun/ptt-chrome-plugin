@@ -10591,8 +10591,9 @@ $.fn.sidebar = function(parameters) {
 
         event: {
           clickaway: function(event) {
-            if( $(event.target).closest(selector.sidebar).size() === 0 ) {
+            if( $(event.target).closest(selector.sidebar).size() === 0 && !$('.modal').hasClass('animating') && !$('.modal').hasClass('visible')) {
               module.verbose('User clicked on dimmed page');
+
               module.hide();
             }
           },
