@@ -29,7 +29,7 @@ pageMod.PageMod({
     contentScriptFile: [
         self.data.url("assets/javascripts/jquery-2.1.3.min.js"), 
         self.data.url("assets/javascripts/jquery.mousewheel.js"),
-        self.data.url("assets/javascripts/semantic.min.js"), 
+        self.data.url("assets/javascripts/semantic.js"), 
         self.data.url("assets/javascripts/moment-with-langs.min.js"), 
         self.data.url("assets/javascripts/URI.js"),
         self.data.url("assets/javascripts/contentscript.js") 

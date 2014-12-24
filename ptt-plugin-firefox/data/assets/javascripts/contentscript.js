@@ -1,6 +1,7 @@
 
 var $body = $('body');
 var url = new URI(window.location.href).hostname();
+
 // the following DOM variables need to be initialized using jQuery selector.
 var $headline,// the DOM that contains the title of the article.
     $articleContent; // the DOM that contains the content of the article.
@@ -215,32 +216,32 @@ function init(ret){
     }
 
     /** Maintain the locking function **/
-    // var $lock = $("#lock");
+    var $lock = $("#lock");
 
-    // // check if the sidebar has been locked by the user
-    // chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
-    //     // automatically show the sidebar if the user has chosen to lock it
-    //     if(ret["lock?"] == 'locked'){
-    //         $lock.removeClass('unlock').addClass('lock');
-    //         $menu.sidebar('show');
-    //         $leftLauncher.addClass('hidden');
-    //     }else{
-    //         /** Fade-in the launcher **/
+    // check if the sidebar has been locked by the user
+    chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
+        // automatically show the sidebar if the user has chosen to lock it
+        if(ret["lock?"] == 'locked'){
+            $lock.removeClass('unlock').addClass('lock');
+            $menu.sidebar('show');
+            $leftLauncher.addClass('hidden');
+        }else{
+            /** Fade-in the launcher **/
             $leftLauncher.transition('horizontal flip', '1000ms');
-    //     }
-    // });
-    // $lock.click(function(event){
-    //     var locked = !$lock.hasClass('lock');
-    //     if(locked){
-    //         $lock.removeClass('unlock').addClass('lock');
+        }
+    });
+    $lock.click(function(event){
+        var locked = !$lock.hasClass('lock');
+        if(locked){
+            $lock.removeClass('unlock').addClass('lock');
 
-    //     }else{
-    //         $lock.removeClass('lock').addClass('unlock');
-    //     }
-    //     chrome.storage.local.set({'lock?': locked? 'locked': 'unlocked'}, function(){
-    //         console.log(locked);
-    //     });
-    // });
+        }else{
+            $lock.removeClass('lock').addClass('unlock');
+        }
+        chrome.storage.local.set({'lock?': locked? 'locked': 'unlocked'}, function(){
+            console.log(locked);
+        });
+    });
 
 
 }
