@@ -33,6 +33,9 @@
 .plugin-menu .header.item{
     font-size: 15.5px  !important;
 }
+.plugin-menu div.push.item{
+    cursor:  pointer;
+}
 
 #comment-header{
     cursor: pointer;
@@ -87,4 +90,9 @@
 }
 .launch.button .text {
     color: #ffffff;
+}
+
+
+#ptt-modal {
+    width: 1000px;
 }
