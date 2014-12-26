@@ -1,0 +1,90 @@
+.plugin-menu::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.plugin-menu::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 5px;
+    background: dimgray;
+}
+.plugin-menu::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: grey;
+}
+.plugin-menu .item span.push-count{
+    display: inline-block;
+    width: 21px;
+    text-align: center;
+}
+.plugin-menu .item{
+    font-size: 14px !important;
+}
+.plugin-menu .item span.title{
+    font-weight: normal;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 12px;
+}
+.plugin-menu .item span.detail{
+    color: #555;
+    font-size: 13px;
+}
+.plugin-menu .header.item{
+    font-size: 15.5px  !important;
+}
+
+#comment-header{
+    cursor: pointer;
+}
+
+.unlock{
+    cursor: pointer;
+}
+.lock{
+    cursor: pointer;
+}
+
+
+.ui.vertical.plugin-menu.sidebar{
+    overflow: hidden;
+    box-shadow: rgb(68, 63, 63) -5px 3px 5px;
+}
+
+.fixed.launch.button {
+    position: absolute;
+    top: 250px;
+    right: -1px;
+
+    width: 160px;
+    height: auto;
+    white-space: nowrap;
+    overflow: hidden;
+;
+}
+.fixed.launch.button.fixed-top {
+    position: fixed;
+;
+}
+
+.fixed.launch.button .text {
+    position: absolute;
+    white-space: nowrap;
+    top: auto;
+    left: 47px;
+    opacity: 1;
+
+}
+.fixed.launch.button:hover {
+    width: 160px;
+}
+.fixed.launch.button:hover .text {
+    opacity: 1;
+}
+
+.launch.button .icon {
+    margin-left: 0px;
+}
+.launch.button .text {
+    color: #ffffff;
+}
