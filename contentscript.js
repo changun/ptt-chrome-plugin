@@ -328,6 +328,7 @@ function init(ret){
         });
 
     }
+    // add Lock icon to the first header in the sidebar
     $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
     setMouseOverEvent(_available);
 

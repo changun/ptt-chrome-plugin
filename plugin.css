@@ -87,7 +87,7 @@
 
 }
 .fixed.launch.button:hover {
-    width: 160px;
+    width: 140px;
 }
 .fixed.launch.button:hover .text {
     opacity: 1;
