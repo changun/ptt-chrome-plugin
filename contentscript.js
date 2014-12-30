@@ -151,13 +151,6 @@ $menu
     });
 
 
-var setNotAvailablePopup = function(){
-    $leftLauncher
-        .popup({
-            popup : $('.ui.popup'),
-            on    : 'mouseover'
-        });
-};
 var setMouseOverEvent = function(){
     // set on mouseover handler
     $leftLauncher.on('mouseover', function(event) {
