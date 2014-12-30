@@ -43,7 +43,7 @@
     line-height: 100%;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    margin: 0 auto;
+    margin: 0 15px auto 15px;
     padding: 0;
     min-width: 600px;
     max-width: 1200px;

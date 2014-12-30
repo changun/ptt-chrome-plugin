@@ -20155,11 +20155,12 @@ ol.ui.horizontal.list li:before,
   right: -2.5rem;
   z-index: 1;
   opacity: 0.8;
-  font-size: 1.25em;
+  font-size: 3.25em;
   color: #ffffff;
   width: 2.25rem;
   height: 2.25rem;
   padding: 0.625rem 0rem 0rem 0rem;
+
 }
 
 .ui.modal > .close:hover {
@@ -21924,7 +21925,8 @@ a.ui.nag {
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+  /* Modify for http://www.appledaily.com.tw/appledaily/article/forum */
+  /*box-sizing: border-box;*/
 }
 
 /* iPad Input Shadows */
@@ -24092,7 +24094,7 @@ th {
 
 .ui[class*="very wide"].left.sidebar,
 .ui[class*="very wide"].right.sidebar {
-  width: 480px;
+  width: 500px;
 }
 
 /*******************************
@@ -24420,7 +24422,8 @@ th {
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+  /* Modify for http://www.appledaily.com.tw/appledaily/article/forum */
+  /*box-sizing: border-box;*/
 }
 
 html,

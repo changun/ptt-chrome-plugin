@@ -1,4 +1,9 @@
+// chrome extension
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-58095038-1']);
+_gaq.push(['_trackPageview']);
 
+// body
 var $body = $('body');
 // the search endpoint
 var searchEndpointUrl = "//www.ptt.rocks/search";
@@ -123,7 +128,7 @@ var $leftLauncher = $('<div id="launcher" class="ui black small launch right att
 $leftLauncher.css({top: headlineTop});
 
 // sidebar menu
-var $menu = $('<div class="ui vertical plugin-menu sidebar inverted very wide right">\n    <div class="header item">\n        <i id="lock" class="icon unlock alternate"></i>\n        相關文章\n    </div>\n\n</div>\n        ');
+var $menu = $('<div class="ui vertical plugin-menu sidebar inverted very wide right">\n\n</div>\n        ');
 
 // modal
 var $modal =$('<div class="ui modal  large" id="ptt-modal"><i class="close icon"></i></div>');
@@ -159,21 +164,23 @@ var setMouseOverEvent = function(){
         $menu.sidebar('show');
         $leftLauncher.addClass('hidden');
         event.preventDefault();
+        _gaq.push(['_trackEvent', "launcherButton", 'mouseover']);
     });
 }
 
 // set on scroll listener to dynamically adjust the position of the launcher
 $(window).on("scroll", function(e) {
     var scrollTop = $body.scrollTop();
-    if (scrollTop > headlineTop && !$leftLauncher.hasClass('fixed-top')) {
+    if (headlineTop - scrollTop <=  launcherTopPos && !$leftLauncher.hasClass('fixed-top')) {
         $leftLauncher.addClass("fixed-top");
         $leftLauncher.css({top: launcherTopPos});
 
-    } else if($body.scrollTop() <= headlineTop && $leftLauncher.hasClass('fixed-top')){
+    } else if(headlineTop - scrollTop > launcherTopPos && $leftLauncher.hasClass('fixed-top')){
         $leftLauncher.removeClass("fixed-top");
         $leftLauncher.css({top: headlineTop});
     }
 });
+
 
 // this prevents the menu's scrolling from effecting the whole window's scrolling
 // IT REQUIRES jquery.mousewheel.js to work!
@@ -209,20 +216,45 @@ function init(ret){
                 }else{
                     $modal.append($postContent);
                 }
-
                 $modal
                     .modal('setting', 'transition', 'horizontal flip')
                     .modal('show')
                 ;
+                _gaq.push(['_trackEvent', "showPost", 'click', uri]);
             }
         });
 
     };
+    /** populate the sidebar content **/
+    // populate related articles
+    if(ret["excellent-articles"] && ret["excellent-articles"].length > 0){
+        _available = true;
+        var header =
+            $('<div class="header item" id="excellent-article-header"><span class="sub header">精選文章</span></div>')
+                .appendTo($menu);
+        ret["excellent-articles"].forEach(function(e){
+            var title = e.title ? e.title : e.subject;
+            var ago = moment(e.last_modified).locale("zh-tw").fromNow();
+            var popularityTag = '<span class="push-count f4 hl">優</span>';
 
+            $('<a class="post item r-ent"></a>')
+                .append( popularityTag)
+                .append('<span class="ui title">' + title +'</span>')
+                .append('<span class="ui date detail"> ' + ago +'</span>')
+                .data("id", e.id)
+                .appendTo($menu)
+                .click(showPost);
+        });
+
+
+    }
     /** populate the sidebar content **/
     // populate related articles
     if(ret.articles.length > 0){
         _available = true;
+        var header =
+            $('<div class="header item">\n    相關文章\n</div>')
+                .appendTo($menu);
         ret.articles.forEach(function(e){
             var board_id = e.id.split(":");
             var title = e.title ? e.title : e.subject;
@@ -250,9 +282,10 @@ function init(ret){
     if(ret["best-match"]){
         _available = true;
         var id = ret["best-match"].id;
-        var title = ret["best-match"].title
+        var title = ret["best-match"].title;
+        var ago = moment(ret["best-match"].last_modified).locale("zh-tw").fromNow();
         var header =
-                $('<div class="header item" id="comment-header"><i class="comment icon"></i><span class="sub header"> '+title+'</span></div>')
+                $('<div class="header item r-ent" id="comment-header"><span class="sub header"> '+title+'</span><span class="ui date detail">' + ago +'</span></div>')
                 .appendTo($menu)
                 .data("id", id)
                 .click(showPost);
@@ -268,13 +301,12 @@ function init(ret){
                 var $post = $(ret);
                 // remove push times
                 $post.find("span.push-ipdatetime").remove();
-                // remove push items
+                // populate each push div to the sidebar
                 $post.find("div.push").each(function(index){
                     var $pushDiv = $(this);
                     $('<a class="item push"></a>')
                         .append($pushDiv.children())
                         .data("id", id)
-                        .click(showPost)
                         .appendTo($menu);
 
                 });
@@ -284,32 +316,10 @@ function init(ret){
             }
         });
 
-        /*ret.comments.pushed.forEach(function(e){
-            var tag = null;
-            if(e.op == "推"){
-                tag = '<span class="hl push-tag">推</span>';
-                push = push + 1;
-            }else if(e.op == "→"){
-                tag = '<span class="f1 hl push-tag">→</span>';
-            }else if(e.op == "噓"){
-                tag = '<span class="f1 hl push-tag">噓</span>';
-                dislike = dislike + 1;
-            }
-            var content = URI.withinString(e.content, function(url) {
-                return '<a target="_blank" href="'+url+'">' + url + '</a>';
-            });
-            $('<a class="item push"></a>')
-                .append(tag)
-                .append('<span class="f3 hl push-userid">' + e.user +'</span>')
-                .append('<span class="f3 push-content">: ' + content +'</span>')
-                .appendTo($menu);
-        });*/
+    }
 
-
-        //push = JsNumberFormatter.formatNumber(push);
-        //dislike = JsNumberFormatter.formatNumber(dislike);
-
-
+    if(_available){
+      $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
     }
     setMouseOverEvent();
 

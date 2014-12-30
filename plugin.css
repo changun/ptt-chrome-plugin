@@ -36,6 +36,14 @@
 .plugin-menu div.push.item{
     cursor:  pointer;
 }
+/* allow push text to become selectable */
+.ui.plugin-menu a.item.push{
+    -moz-user-select: text;
+    -webkit-user-select:text;
+    -ms-user-select: text;
+}
+
+
 
 #comment-header{
     cursor: pointer;
@@ -95,4 +103,5 @@
 
 #ptt-modal {
     width: 1000px;
+    background-color: black;
 }
