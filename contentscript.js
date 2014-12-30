@@ -123,7 +123,7 @@ $.ajax
 /** create plugin DOMs **/
 
 // launcher
-var $leftLauncher = $('<div id="launcher" class="ui black small launch right attached fixed transition hidden button" style="font-size: 15px">\n    <div><i class="announcement icon"></i><span class="ui-text">看看鄉民怎麼說?</span></div>\n    </div>');
+var $leftLauncher = $('<div id="launcher" class="ui black small launch right attached fixed transition hidden button" style="font-size: 15px">\n    <div><i class="announcement icon"></i><span class="ui-text" id="launcher-title">看看鄉民怎麼說?</span></div>\n    \n    </div>');
 // move launcher button to be vertically aligned with the article headline
 $leftLauncher.css({top: headlineTop});
 
@@ -151,14 +151,32 @@ $menu
     });
 
 
-var setMouseOverEvent = function(){
-    // set on mouseover handler
-    $leftLauncher.on('mouseover', function(event) {
-        $menu.sidebar('show');
-        $leftLauncher.addClass('hidden');
-        event.preventDefault();
-        _gaq.push(['_trackEvent', "launcherButton", 'mouseover']);
-    });
+var setMouseOverEvent = function(isAvailable){
+    if(isAvailable) {
+        // set on mouseover handler
+        $leftLauncher.on('mouseover', function (event) {
+            $menu.sidebar('show');
+            $leftLauncher.addClass('hidden');
+            event.preventDefault();
+            _gaq.push(['_trackEvent', "launcherButton", 'mouseover']);
+        });
+    }else{
+        var $launcherTitle = $("#launcher-title");
+        var $launcherIcon = $(".icon.announcement");
+        var originalTitle = $launcherTitle.html();
+        $leftLauncher.on('mouseover', function (event) {
+            $launcherTitle.html("暫無相關評論");
+            $launcherIcon.removeClass("announcement");
+            $launcherIcon.addClass("frown");
+            event.preventDefault();
+        });
+        $leftLauncher.on('mouseout', function (event) {
+            $launcherTitle.html(originalTitle);
+            $launcherIcon.addClass("announcement");
+            $launcherIcon.removeClass("frown");
+            event.preventDefault();
+        });
+    }
 }
 
 // set on scroll listener to dynamically adjust the position of the launcher
@@ -310,11 +328,9 @@ function init(ret){
         });
 
     }
+    $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
+    setMouseOverEvent(_available);
 
-    if(_available){
-      $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
-    }
-    setMouseOverEvent();
 
     /** Maintain the locking function **/
     var $lock = $("#lock");
@@ -331,6 +347,7 @@ function init(ret){
                 /** Fade-in the launcher **/
                 $leftLauncher.transition('horizontal flip', '1000ms');
             });
+
         }
     });
     $lock.click(function(event){
