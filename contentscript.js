@@ -90,7 +90,14 @@ if(url.indexOf('yahoo') >=0) {
     headlineTop = $headline.offset()["top"] + 10;
     $articleContent = $("div.story sectione > p");
     launcherTopPos = 10;
+}else if(url.indexOf("storm") >= 0){
+    //stormmedis
+    $headline = $('h3');
+    headlineTop = $headline.offset()["top"] + 10;
+    $articleContent = $(".newsDescBlk p");
+    launcherTopPos = 10;
 }
+
 
 
 
@@ -332,23 +339,22 @@ function init(ret){
     $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
     setMouseOverEvent(_available);
 
+    _gaq.push(['_trackEvent', "launcherButton", 'loaded']);
 
     /** Maintain the locking function **/
     var $lock = $("#lock");
-
     // check if the sidebar has been locked by the user
     chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
         // automatically show the sidebar if the user has chosen to lock it
-        if(ret["lock?"] == 'locked'){
+        if(ret["lock?"] == 'locked' && _available){
             $lock.removeClass('unlock').addClass('lock');
             $menu.sidebar('show');
             $leftLauncher.addClass('hidden');
         }else{
-            $.later(100, this, function () {
-                /** Fade-in the launcher **/
-                $leftLauncher.transition('horizontal flip', '1000ms');
-            });
-
+                $.later(100, this, function () {
+                    /** Fade-in the launcher **/
+                    $leftLauncher.transition('horizontal flip', '1000ms');
+                });
         }
     });
     $lock.click(function(event){

@@ -21,14 +21,15 @@
           "https://*.chinatimes.com/realtimenews/*",
           "http://www.chinatimes.com/newspapers/*",
           "https://www.chinatimes.com/newspapers/*",
-          "http://udn.com/*.shtml",
-          "https://udn.com/*.shtml",
+          "http://udn.com/*.shtml*",
+          "https://udn.com/*.shtml*",
           "http://news.ltn.com.tw/news/*",
           "https://news.ltn.com.tw/news/*",
           "http://*.appledaily.com.tw/*/article/*",
           "https://*.appledaily.com.tw/*/article/*",
           "http://*.ettoday.net/news/*/*.htm",
-          "https://*.ettoday.net/news/*/*.htm"
+          "https://*.ettoday.net/news/*/*.htm",
+          "*://www.stormmediagroup.com/opencms/*/detail/*"
 
       ],
       "web_accessible_resources": [
