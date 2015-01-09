@@ -33,6 +33,17 @@
 .plugin-menu .header.item{
     font-size: 15.5px  !important;
 }
+.plugin-menu div.push.item{
+    cursor:  pointer;
+}
+/* allow push text to become selectable */
+.ui.plugin-menu a.item.push{
+    -moz-user-select: text;
+    -webkit-user-select:text;
+    -ms-user-select: text;
+}
+
+
 
 #comment-header{
     cursor: pointer;
@@ -56,7 +67,7 @@
     top: 250px;
     right: -1px;
 
-    width: 160px;
+    width: 140px;
     height: auto;
     white-space: nowrap;
     overflow: hidden;
@@ -76,7 +87,7 @@
 
 }
 .fixed.launch.button:hover {
-    width: 160px;
+    width: 140px;
 }
 .fixed.launch.button:hover .text {
     opacity: 1;
@@ -87,4 +98,10 @@
 }
 .launch.button .text {
     color: #ffffff;
+}
+
+
+#ptt-modal {
+    width: 1000px;
+    background-color: black;
 }

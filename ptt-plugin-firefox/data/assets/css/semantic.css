@@ -6833,7 +6833,7 @@ i.flag:not(.icon) {
 i.flag:not(.icon):before {
   display: inline-block;
   content: '';
-  background: url("themes/default/assets/images/flags.png") no-repeat 0px 0px;
+  background: url("assets/images/flags.png") no-repeat 0px 0px;
   width: 16px;
   height: 11px;
 }
