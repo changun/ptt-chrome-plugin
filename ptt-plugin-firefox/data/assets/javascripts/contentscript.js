@@ -81,16 +81,14 @@ if(url.indexOf('yahoo') >=0) {
 }else if(url.indexOf('apple') >= 0){
     // apple ent
     $headline = $('#h1');
+    headlineTop = $headline.position()["top"] + 10;
+    launcherTopPos = 10;
     if (url.indexOf('ent') >= 0) {
-        headlineTop = $headline.position()["top"] + 10;
         $articleContent = $(".articulum p, .articulum h2");
-        launcherTopPos = 10;
     } 
     // apple daily
     else {
-        headlineTop = $headline.position()["top"] + 10;
         $articleContent = $("#summary"); 
-        launcherTopPos = 10;
     }
 }else if(url.indexOf("ettoday") >= 0){
     //ettoday
