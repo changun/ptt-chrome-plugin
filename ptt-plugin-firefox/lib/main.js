@@ -25,7 +25,8 @@ pageMod.PageMod({
       "http://www.ettoday.net/news/*",
       "https://www.ettoday.net/news/*",
       "http://www.stormmediagroup.com/opencms/*",
-      "htts://www.stormmediagroup.com/opencms/*"    
+      "htts://www.stormmediagroup.com/opencms/*",
+      "http://www.peoplenews.tw/news/*"   
     ],
     contentStyleFile: [
         self.data.url("assets/css/semantic.css"),

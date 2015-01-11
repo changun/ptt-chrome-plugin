@@ -102,11 +102,13 @@ if(url.indexOf('yahoo') >=0) {
     headlineTop = $headline.offset()["top"] + 10;
     $articleContent = $(".newsDescBlk p");
     launcherTopPos = 10;
+} else if (url.indexOf("peoplenews") >= 0) {
+    // peoplenews
+    $headline = $('div.news_title');
+    headlineTop = $headline.offset()["top"] + 10;
+    $articleContent = $("#newscontent p");
+    launcherTopPos = 10
 }
-
-
-
-
 /** the parameters that will be sent to the search engine **/
 var title = $headline.text();
 var articleContent = $articleContent.text();
