@@ -31,7 +31,7 @@
           "https://*.ettoday.net/news/*/*.htm",
           "*://www.stormmediagroup.com/opencms/*/detail/*",
           "http://www.peoplenews.tw/news/*",
-          "http://newtalk.tw/news/"  
+          "http://newtalk.tw/news/*"  
       ],
       "web_accessible_resources": [
             "assets/images/*",
