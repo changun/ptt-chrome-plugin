@@ -1,7 +1,7 @@
 {
   "name" : "看看鄉民怎麼說?",
-  "version" : "1.0.16",
-  "description" : "讓你看各大新聞網時同時看ptt鄉民對新聞的討論和相關文章?",
+  "version" : "1.0.18",
+  "description" : "這是你認識 PTT 的起點。不需要申請帳號，便可在各大新聞網站一邊看新聞，同時閱覽 PTT 的時事討論",
   "icons" : {
     "16" : "triplec-16.png",
     "48" : "triplec-48.png",
@@ -21,8 +21,8 @@
           "https://*.chinatimes.com/realtimenews/*",
           "http://www.chinatimes.com/newspapers/*",
           "https://www.chinatimes.com/newspapers/*",
-          "http://udn.com/*.shtml*",
-          "https://udn.com/*.shtml*",
+          "http://udn.com/news/*/*/*",
+          "https://udn.com/news/*/*/*",
           "http://news.ltn.com.tw/news/*",
           "https://news.ltn.com.tw/news/*",
           "http://*.appledaily.com.tw/*/article/*",
