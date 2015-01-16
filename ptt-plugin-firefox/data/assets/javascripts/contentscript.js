@@ -100,14 +100,14 @@ if(url.indexOf('yahoo') >=0) {
     //stormmedis
     $headline = $('h3');
     headlineTop = $headline.offset()["top"] + 10;
-    $articleContent = $(".newsDescBlk p");
+    $articleContent = $(".newsDescBlk p, .newsDescBlk div");
     launcherTopPos = 10;
 } else if (url.indexOf("peoplenews") >= 0) {
     // peoplenews
     $headline = $('div.news_title');
     headlineTop = $headline.offset()["top"] + 10;
     $articleContent = $("#newscontent p");
-    launcherTopPos = 10;
+    launcherTopPos = 45;
 } else if (url.indexOf("newtalk") >= 0) {
     // newtalks
     $headline = $('.news_cont_area_tit label');
@@ -115,7 +115,6 @@ if(url.indexOf('yahoo') >=0) {
     $articleContent = $(".news_ctxt_area_word");
     launcherTopPos = 10;
 }
-
 
 /** the parameters that will be sent to the search engine **/
 var title = $headline.text();
