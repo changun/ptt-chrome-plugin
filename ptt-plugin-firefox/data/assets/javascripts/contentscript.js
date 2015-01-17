@@ -67,10 +67,10 @@ if(url.indexOf('yahoo') >=0) {
 
 }else if (url.indexOf('udn') >= 0){
     // udn
-    $headline = $('.story_title');
-    headlineTop = $('.story_title').position()["top"];
-    $articleContent = $('.story p');
-    launcherTopPos = 10;
+    $headline = $('.story_title,#story_art_title');
+    headlineTop = $headline.position()["top"];
+    $articleContent = $('.story p,#story_body p');
+    launcherTopPos = 40;
 
 }else if (url.indexOf('ltn') >= 0){
     // liberty
@@ -83,13 +83,7 @@ if(url.indexOf('yahoo') >=0) {
     $headline = $('#h1');
     headlineTop = $headline.position()["top"] + 10;
     launcherTopPos = 10;
-    if (url.indexOf('ent') >= 0) {
-        $articleContent = $(".articulum p, .articulum h2");
-    } 
-    // apple daily
-    else {
-        $articleContent = $("#summary"); 
-    }
+    $articleContent = $("#summary,.articulum p, .articulum h2");
 }else if(url.indexOf("ettoday") >= 0){
     //ettoday
     $headline = $('h2.title');
