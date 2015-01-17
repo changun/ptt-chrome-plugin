@@ -246,7 +246,6 @@ function init(ret){
                 $modal
                     .modal('setting', 'transition', 'horizontal flip')
                     .modal('show');
-                var contentPos = $modal.find('#main-content').offset();
                 _gaq.push(['_trackEvent', "showPost", 'click', uri]);
             }
         });
