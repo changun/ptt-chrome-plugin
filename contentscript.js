@@ -83,13 +83,7 @@ if(url.indexOf('yahoo') >=0) {
     $headline = $('#h1');
     headlineTop = $headline.position()["top"] + 10;
     launcherTopPos = 10;
-    if (url.indexOf('ent') >= 0) {
-        $articleContent = $(".articulum p, .articulum h2");
-    } 
-    // apple daily
-    else {
-        $articleContent = $("#summary"); 
-    }
+    $articleContent = $("#summary,.articulum p,.articulum h2");
 }else if(url.indexOf("ettoday") >= 0){
     //ettoday
     $headline = $('h2.title');
