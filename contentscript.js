@@ -67,10 +67,10 @@ if(url.indexOf('yahoo') >=0) {
 
 }else if (url.indexOf('udn') >= 0){
     // udn
-    $headline = $('.story_title');
-    headlineTop = $('.story_title').position()["top"];
-    $articleContent = $('.story p');
-    launcherTopPos = 10;
+    $headline = $('.story_title,#story_art_title');
+    headlineTop = $headline.offset()["top"];
+    $articleContent = $('.story p,#story_body p');
+    launcherTopPos = 40;
 
 }else if (url.indexOf('ltn') >= 0){
     // liberty
@@ -245,8 +245,8 @@ function init(ret){
                 }
                 $modal
                     .modal('setting', 'transition', 'horizontal flip')
-                    .modal('show')
-                ;
+                    .modal('show');
+                var contentPos = $modal.find('#main-content').offset();
                 _gaq.push(['_trackEvent', "showPost", 'click', uri]);
             }
         });
