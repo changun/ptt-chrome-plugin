@@ -1,6 +1,6 @@
 {
   "name" : "看看鄉民怎麼說?",
-  "version" : "1.0.19",
+  "version" : "1.0.20",
   "description" : "這是你認識 PTT 的起點。不需要申請帳號，便可在各大新聞網站一邊看新聞，同時閱覽 PTT 的時事討論",
   "icons" : {
     "16" : "triplec-16.png",
@@ -13,8 +13,8 @@
   "content_scripts" : [
     {
       "matches" : [ 
-         "http://tw.news.yahoo.com/*.html",
-          "https://tw.news.yahoo.com/*.html",
+         "http://tw.news.yahoo.com/*.html*",
+          "https://tw.news.yahoo.com/*.html*",
           "http://www.nownews.com/n/*",
           "https://www.nownews.com/n/*",
           "http://*.chinatimes.com/realtimenews/*",
@@ -27,8 +27,8 @@
           "https://news.ltn.com.tw/news/*",
           "http://*.appledaily.com.tw/*/article/*",
           "https://*.appledaily.com.tw/*/article/*",
-          "http://*.ettoday.net/news/*/*.htm",
-          "https://*.ettoday.net/news/*/*.htm",
+          "http://*.ettoday.net/news/*/*.htm*",
+          "https://*.ettoday.net/news/*/*.htm*",
           "*://www.stormmediagroup.com/opencms/*/detail/*",
           "http://www.peoplenews.tw/news/*",
           "http://newtalk.tw/news/*"  
