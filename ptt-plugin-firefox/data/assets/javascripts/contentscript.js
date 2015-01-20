@@ -139,15 +139,21 @@ $.ajax
 /** create plugin DOMs **/
 
 // launcher
-var $leftLauncher = $('<div id="launcher" class="ui black small launch right attached fixed transition hidden button" style="font-size: 15px">\n    <div><i class="announcement icon"></i><span class="ui-text" id="launcher-title">看看鄉民怎麼說?</span></div>\n    \n    </div>');
+var $leftLauncher = 
+    $("<div>", {id:"launcher", class:"ui black small launch right attached fixed transition hidden button", style:"font-size: 15px"})
+    .append($("<div>"))
+    .append($("<i>", {class:"announcement icon"}), $("<span>", {class:"ui-text", id:"launcher-title", text:"看看鄉民怎麼說?"}));
 // move launcher button to be vertically aligned with the article headline
 $leftLauncher.css({top: headlineTop});
 
 // sidebar menu
-var $menu = $('<div class="ui vertical plugin-menu sidebar inverted very wide right">\n\n</div>\n        ');
+var $menu = 
+    $("<div>", {class:"ui vertical plugin-menu sidebar inverted very wide right"});
 
 // modal
-var $modal =$('<div class="ui modal  large" id="ptt-modal"><i class="close icon"></i></div>');
+var $modal =
+    $("<div>", {class:"ui modal large", id:"ptt-modal"})
+    .append($("<i>", {class:"close icon"}));
 // append the DOMs to the body
 $body.append($menu);
 $body.append($leftLauncher);
@@ -262,12 +268,13 @@ function init(ret){
         ret["excellent-articles"].forEach(function(e){
             var title = e.title ? e.title : e.subject;
             var ago = moment(e.last_modified).locale("zh-tw").fromNow();
-            var popularityTag = '<span class="push-count f4 hl">優</span>';
+            var popularityTag = 
+                $("<span>", {class:"push-count f4 hl", text:"優"});
 
-            $('<a class="post item r-ent"></a>')
-                .append( popularityTag)
-                .append('<span class="ui title">' + title +'</span>')
-                .append('<span class="ui date detail"> ' + ago +'</span>')
+            $("<a>", {class:"post item r-ent"})
+                .append(popularityTag)
+                .append($("<span>", {class:"ui title", text: title}))
+                .append($("<span>", {class:"ui date detail", text: ago}))
                 .data("id", e.id)
                 .appendTo($menu)
                 .click(showPost);
@@ -290,14 +297,14 @@ function init(ret){
             if(e.popularity >= 100){
                 popularity = '<span class="push-count f1 hl">爆</span>';
             }else if(e.popularity >= 10){
-                popularity = '<span class="push-count hl f3">'+e.popularity +'</span>'
+                popularity = $("<span>", {class:"push-count hl f3", text:e.popularity});
             }else{
-                popularity = '<span class="push-count hl f2">'+e.popularity +'</span>'
+                popularity = $("<span>", {class:"push-count hl f2", text:e.popularity});
             }
-            $('<a class="post item r-ent"></a>')
+            $("<a>", {class:"post item r-ent"})
                 .append(popularity)
-                .append('<span class="ui title">' + title +'</span>')
-                .append('<span class="ui date detail"> ' + ago +'</span>')
+                .append($("<span>", {class:"ui title", text:title}))
+                .append($("<span>", {class:"ui date detail", text: ago}))
                 .data("id", e.id)
                 .appendTo($menu)
                 .click(showPost);
@@ -312,7 +319,8 @@ function init(ret){
         var title = ret["best-match"].title;
         var ago = moment(ret["best-match"].last_modified).locale("zh-tw").fromNow();
         var header =
-                $('<div class="header item r-ent" id="comment-header"><span class="sub header"> '+title+'</span><span class="ui date detail">' + ago +'</span></div>')
+                $("<div>", {class:"header item r-ent", id:"comment-header"})
+                .append($("<span>", {class:"sub header", text: title}), $("<span>", {class:"ui date detail", text:ago}))
                 .appendTo($menu)
                 .data("id", id)
                 .click(showPost);
