@@ -1,7 +1,7 @@
-// chrome extension
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-58095038-1']);
-_gaq.push(['_trackPageview']);
+// // chrome extension
+// var _gaq = _gaq || [];
+// _gaq.push(['_setAccount', 'UA-58095038-1']);
+// _gaq.push(['_trackPageview']);
 
 // body
 var $body = $('body');
@@ -180,7 +180,7 @@ var setMouseOverEvent = function(isAvailable){
             $menu.sidebar('show');
             $leftLauncher.addClass('hidden');
             event.preventDefault();
-            _gaq.push(['_trackEvent', "launcherButton", 'mouseover']);
+            // _gaq.push(['_trackEvent', "launcherButton", 'mouseover']);
         });
     }else{
         var $launcherTitle = $("#launcher-title");
@@ -253,7 +253,7 @@ function init(ret){
                     .modal('setting', 'transition', 'horizontal flip')
                     .modal('show')
                 ;
-                _gaq.push(['_trackEvent', "showPost", 'click', uri]);
+                // _gaq.push(['_trackEvent', "showPost", 'click', uri]);
             }
         });
 
@@ -356,7 +356,7 @@ function init(ret){
     $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
     setMouseOverEvent(_available);
 
-    _gaq.push(['_trackEvent', "launcherButton", 'loaded']);
+    // _gaq.push(['_trackEvent', "launcherButton", 'loaded']);
 
     /** Maintain the locking function **/
     var $lock = $("#lock");
