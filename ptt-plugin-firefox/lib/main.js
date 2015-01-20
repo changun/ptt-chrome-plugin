@@ -21,8 +21,8 @@ pageMod.PageMod({
       /^https:\/\/news\.ltn\.com\.tw\/news\/.*/,
       /^http:\/\/.*appledaily.com.tw\/.*\/article\/.*/,
       /^https:\/\/.*appledaily.com.tw\/.*\/article\/.*/,
-      /^http:\/\/www.ettoday.net\/news\/(\d*)\/.*htm/,
-      /^https:\/\/www.ettoday.net\/news\/(\d*)\/.*htm/,
+      /^http:\/\/www.ettoday.net\/news\/(\d*)\/.*htm.?.*/,
+      /^https:\/\/www.ettoday.net\/news\/(\d*)\/.*htm.?.*/,
       /http:\/\/www.stormmediagroup.com\/opencms\/.*\/detail\/.*/,
       /^http:\/\/www.peoplenews.tw\/news\/.*/,
       /^http:\/\/newtalk.tw\/news\/.*/   
