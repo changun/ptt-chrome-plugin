@@ -241,6 +241,7 @@ function init(ret){
             //the url where you want to sent the userName and password to
             url: uri,
             async: true,
+            jsonp: false,
             success: function (ret) {
                 var $postContent = $(ret).find('#main-content');
                 var $prevPostContnet = $modal.find('#main-content');
@@ -332,6 +333,7 @@ function init(ret){
             //the url where you want to sent the userName and password to
             url: postUrl(id),
             async: true,
+            jsonp: false,
             success: function (ret) {
                 var $post = $(ret);
                 // remove push times
