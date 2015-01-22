@@ -23,6 +23,8 @@
           "https://www.chinatimes.com/newspapers/*",
           "http://udn.com/news/*/*/*",
           "https://udn.com/news/*/*/*",
+          "http://udn.com/NEWS/*/*/*",
+          "https://udn.com/NEWS/*/*/*",
           "http://news.ltn.com.tw/news/*",
           "https://news.ltn.com.tw/news/*",
           "http://*.appledaily.com.tw/*/article/*",
