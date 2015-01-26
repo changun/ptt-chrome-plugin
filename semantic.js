@@ -5700,7 +5700,8 @@ $.fn.modal = function(parameters) {
 
         can: {
           fit: function() {
-            return (module.cache.height < module.cache.contextHeight);
+              return false;
+            //return (module.cache.height < module.cache.contextHeight);
           }
         },
 

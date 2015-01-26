@@ -1,8 +1,8 @@
 // chrome extension
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-58095038-1']);
+var url = new URI(window.location.href).hostname();
 _gaq.push(['_trackPageview']);
-
 // body
 var $body = $('body');
 // the search endpoint
@@ -40,7 +40,7 @@ function isComplete(){
 }
 
 /** Initialization for each specific News Website**/
-var url = new URI(window.location.href).hostname();
+
 if(url.indexOf('yahoo') >=0) {
     // yahoo
      $headline = $(".headline");
@@ -109,6 +109,7 @@ if(url.indexOf('yahoo') >=0) {
     $articleContent = $(".news_ctxt_area_word");
     launcherTopPos = 10;
 }
+_gaq.push(['_trackEvent', "init", url]);
 
 /** the parameters that will be sent to the search engine **/
 var title = $headline.text();
@@ -174,7 +175,7 @@ var setMouseOverEvent = function(isAvailable){
             $menu.sidebar('show');
             $leftLauncher.addClass('hidden');
             event.preventDefault();
-            _gaq.push(['_trackEvent', "launcherButton", 'mouseover']);
+            _gaq.push(['_trackEvent', "show-sidebar", 'mouseover']);
         });
     }else{
         var $launcherTitle = $("#launcher-title");
@@ -228,7 +229,16 @@ isComplete();
 function init(ret){
     // show the ptt post in the modal when the user clicks a post
     var showPost = function (event){
-        var uri = postUrl($(this).data('id'));
+        var $item = $(this);
+        var uri = postUrl($item.data('id'));
+        var type = $item.data('type');
+        var index = $item.data('index');
+        var $prevPostContnet = $modal.find('div').remove();;
+
+        $modal.append($("<div>").addClass("ui indeterminate text loader active")
+                                .html("Loading"))
+              .modal('setting', 'transition', 'horizontal flip')
+              .modal('show');
         $.ajax
         ({
             type: "GET",
@@ -237,16 +247,12 @@ function init(ret){
             async: true,
             success: function (ret) {
                 var $postContent = $(ret).find('#main-content');
-                var $prevPostContnet = $modal.find('#main-content');
-                if($prevPostContnet.length){
-                    $prevPostContnet.replaceWith($postContent);
-                }else{
-                    $modal.append($postContent);
-                }
-                $modal
-                    .modal('setting', 'transition', 'horizontal flip')
-                    .modal('show');
-                _gaq.push(['_trackEvent', "showPost", 'click', uri]);
+                $modal.find('div').remove();
+                $modal.append($postContent);
+
+                console.log($modal.modal('can fit'));
+                $modal.modal("refresh");
+                _gaq.push(['_trackEvent', "show-post", type]);
             }
         });
 
@@ -258,7 +264,7 @@ function init(ret){
         var header =
             $('<div class="header item" id="excellent-article-header"><span class="sub header">精選文章</span></div>')
                 .appendTo($menu);
-        ret["excellent-articles"].forEach(function(e){
+        ret["excellent-articles"].forEach(function(e, index){
             var title = e.title ? e.title : e.subject;
             var ago = moment(e.last_modified).locale("zh-tw").fromNow();
             var popularityTag = '<span class="push-count f4 hl">優</span>';
@@ -268,6 +274,8 @@ function init(ret){
                 .append('<span class="ui title">' + title +'</span>')
                 .append('<span class="ui date detail"> ' + ago +'</span>')
                 .data("id", e.id)
+                .data("type", "excellent-posts")
+                .data("index", index)
                 .appendTo($menu)
                 .click(showPost);
         });
@@ -281,7 +289,7 @@ function init(ret){
         var header =
             $('<div class="header item">\n    相關文章\n</div>')
                 .appendTo($menu);
-        ret.articles.forEach(function(e){
+        ret.articles.forEach(function(e, index){
             var board_id = e.id.split(":");
             var title = e.title ? e.title : e.subject;
             var ago = moment(e.last_modified).locale("zh-tw").fromNow();
@@ -298,6 +306,8 @@ function init(ret){
                 .append('<span class="ui title">' + title +'</span>')
                 .append('<span class="ui date detail"> ' + ago +'</span>')
                 .data("id", e.id)
+                .data("type", "related-posts")
+                .data("index", index)
                 .appendTo($menu)
                 .click(showPost);
         });
@@ -314,6 +324,8 @@ function init(ret){
                 $('<div class="header item r-ent" id="comment-header"><span class="sub header"> '+title+'</span><span class="ui date detail">' + ago +'</span></div>')
                 .appendTo($menu)
                 .data("id", id)
+                .data("type", "best-match-posts")
+                .data("index", 0)
                 .click(showPost);
 
         // fetch the post from S3
@@ -333,6 +345,8 @@ function init(ret){
                     $('<a class="item push"></a>')
                         .append($pushDiv.children())
                         .data("id", id)
+                        .data("type", "best-match-post")
+                        .data("index", 0)
                         .appendTo($menu);
 
                 });
@@ -347,7 +361,7 @@ function init(ret){
     $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
     setMouseOverEvent(_available);
 
-    _gaq.push(['_trackEvent', "launcherButton", 'loaded']);
+    _gaq.push(['_trackEvent', "loaded", url]);
 
     /** Maintain the locking function **/
     var $lock = $("#lock");
@@ -357,6 +371,7 @@ function init(ret){
         if(ret["lock?"] == 'locked' && _available){
             $lock.removeClass('unlock').addClass('lock');
             $menu.sidebar('show');
+            _gaq.push(['_trackEvent', "show-sidebar", 'auto']);
             $leftLauncher.addClass('hidden');
         }else{
                 $.later(100, this, function () {
@@ -369,9 +384,11 @@ function init(ret){
         var locked = !$lock.hasClass('lock');
         if(locked){
             $lock.removeClass('unlock').addClass('lock');
+            _gaq.push(['_trackEvent', "lock", "lock"]);
 
         }else{
             $lock.removeClass('lock').addClass('unlock');
+            _gaq.push(['_trackEvent', "lock", "unlock"]);
         }
         chrome.storage.local.set({'lock?': locked? 'locked': 'unlocked'}, function(){
             console.log(locked);
