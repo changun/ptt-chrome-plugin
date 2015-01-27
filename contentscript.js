@@ -154,6 +154,15 @@ $body.append($menu);
 $body.append($leftLauncher);
 $body.append($modal);
 
+// show launcher
+// check if the sidebar has been locked by the user
+chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
+    // automatically show the sidebar if the user has chosen to lock it
+    if(ret["lock?"] == 'unlocked'){
+        $leftLauncher.transition('horizontal flip', '1000ms');
+    }
+});
+
 // create sidebar
 $menu
     .sidebar({
@@ -164,6 +173,23 @@ $menu
         onHide: function(event){
             // show the launcher button
             $leftLauncher.removeClass('hidden');
+        },
+        onShow: function(e){
+            $lock = $("#lock");
+            $lock.popup('hide').popup('destroy').popup({html:'<div class="column"><i class="idea icon large"></i></div>'});
+            chrome.storage.local.get({'has-locked': 'false', 'first-time': 'true'}, function(ret) {
+                // show description for the locker if it has never been clicked before
+                // AND it is the first time the user open the sidebar OR a random number is > 0.7
+                if((ret["has-locked"] == 'false' || ret["has-locked"] == false) &&
+                   (ret["first-time"] == 'true' || ret["first-time"] == true || Math.random() > 0.7)){
+
+                    $lock.popup("show");
+                    $.later(3000, this, function(){
+                        $lock.popup("hide");
+                    })
+                }
+            });
+            chrome.storage.local.set({'first-time': false}, function(){});
         }
     });
 
@@ -194,7 +220,7 @@ var setMouseOverEvent = function(isAvailable){
             event.preventDefault();
         });
     }
-}
+};
 
 // set on scroll listener to dynamically adjust the position of the launcher
 $(window).on("scroll", function(e) {
@@ -358,13 +384,13 @@ function init(ret){
 
     }
     // add Lock icon to the first header in the sidebar
-    $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
-    setMouseOverEvent(_available);
+    var $lock = $('<i id="lock" class="icon unlock alternate" data-position="left center" ></i>');
 
+    $(".ui.plugin-menu .header").first().append($lock);
+    setMouseOverEvent(_available);
     _gaq.push(['_trackEvent', "loaded", url]);
 
     /** Maintain the locking function **/
-    var $lock = $("#lock");
     // check if the sidebar has been locked by the user
     chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
         // automatically show the sidebar if the user has chosen to lock it
@@ -373,24 +399,38 @@ function init(ret){
             $menu.sidebar('show');
             _gaq.push(['_trackEvent', "show-sidebar", 'auto']);
             $leftLauncher.addClass('hidden');
-        }else{
-                $.later(100, this, function () {
-                    /** Fade-in the launcher **/
-                    $leftLauncher.transition('horizontal flip', '1000ms');
-                });
         }
     });
+
+    var popupTimer;
     $lock.click(function(event){
+
+        if(popupTimer) {popupTimer.cancel()};
         var locked = !$lock.hasClass('lock');
         if(locked){
             $lock.removeClass('unlock').addClass('lock');
             _gaq.push(['_trackEvent', "lock", "lock"]);
+            chrome.storage.local.set({'has-locked': true}, function(){});
+            // show popup
+            $lock.popup("hide").popup("destroy").popup({"title":'套件固定展開', "on":"click"}).popup("show");
+            // hide popup in a moment
+            popupTimer = $.later(2000, this, function(){
+                $lock.popup("hide").popup("destroy");
+            })
 
         }else{
             $lock.removeClass('lock').addClass('unlock');
             _gaq.push(['_trackEvent', "lock", "unlock"]);
+            chrome.storage.local.set({'has-unlocked': true}, function(){});
+            // show popup
+            $lock.popup("hide").popup("destroy").popup({"title":'取消', "on":"click"}).popup("show");
+            // hide popup in a moment
+            popupTimer = $.later(2000, this, function(){
+                $lock.popup("hide").popup("destroy");
+            })
+
         }
-        chrome.storage.local.set({'lock?': locked? 'locked': 'unlocked'}, function(){
+        chrome.storage.local.set({'lock?': locked ? 'locked': 'unlocked'}, function(){
             console.log(locked);
         });
     });
