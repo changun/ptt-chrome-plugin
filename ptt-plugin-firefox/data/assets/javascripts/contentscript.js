@@ -1,8 +1,9 @@
-// // chrome extension
 // var _gaq = _gaq || [];
 // _gaq.push(['_setAccount', 'UA-58095038-1']);
 // _gaq.push(['_trackPageview']);
+var ffStorage = window.localStorage
 
+var url = new URI(window.location.href).hostname();
 // body
 var $body = $('body');
 // the search endpoint
@@ -40,7 +41,6 @@ function isComplete(){
 }
 
 /** Initialization for each specific News Website**/
-var url = new URI(window.location.href).hostname();
 if(url.indexOf('yahoo') >=0) {
     // yahoo
      $headline = $(".headline");
@@ -159,6 +159,12 @@ $body.append($menu);
 $body.append($leftLauncher);
 $body.append($modal);
 
+// show launcher
+// check if the sidebar has been locked by the user
+if(ffStorage.getItem("lock") === "unlocked" || ffStorage.getItem("lock") === null || ffStorage.getItem("lock") === false) {
+    $leftLauncher.transition('horizontal flip', '1000ms');
+}
+
 // create sidebar
 $menu
     .sidebar({
@@ -169,9 +175,23 @@ $menu
         onHide: function(event){
             // show the launcher button
             $leftLauncher.removeClass('hidden');
+        },
+        onShow: function(e) {
+            $lock = $("#lock")
+            $lock.popup('hide').popup('destroy')
+                .popup({html:'<div class="column"><i class="idea icon large"></i></div>'});
+
+            if ((ffStorage.getItem("hasLocked") === "false" || ffStorage.getItem("hasLocked") === null || ffStorage.getItem("hasLocked") === false) &&
+                (ffStorage.getItem("firstTime") === "true" || ffStorage.getItem("firstTime") === true || Math.random() > 0.7)) {
+
+                $lock.popup("show");
+                $.later(3000, this, function() {
+                    $lock.popup("hide");
+                });
+            }
+            ffStorage.setItem("firstTime" , "false");
         }
     });
-
 
 var setMouseOverEvent = function(isAvailable){
     if(isAvailable) {
@@ -232,9 +252,19 @@ isComplete();
 
 
 function init(ret){
+
     // show the ptt post in the modal when the user clicks a post
     var showPost = function (event){
-        var uri = postUrl($(this).data('id'));
+        var $item = $(this);
+        var uri = postUrl($item.data('id'));
+        var type = $item.data('type');
+        var index = $item.data('index');
+        var $prevPostContent = $modal.find('div').remove();
+
+        $modal.append($("<div>").addClass("ui indeterminate text loader active")
+                                .html("Loading"))
+            .modal('setting', 'transition', 'horizontal flip')
+            .modal('show');
         $.ajax
         ({
             type: "GET",
@@ -244,16 +274,11 @@ function init(ret){
             jsonp: false,
             success: function (ret) {
                 var $postContent = $(ret).find('#main-content');
-                var $prevPostContnet = $modal.find('#main-content');
-                if($prevPostContnet.length){
-                    $prevPostContnet.replaceWith($postContent);
-                }else{
-                    $modal.append($postContent);
-                }
-                $modal
-                    .modal('setting', 'transition', 'horizontal flip')
-                    .modal('show')
-                ;
+                $modal.find('div').remove();
+                $modal.append($postContent);
+
+                console.log($modal.modal('can fit'));
+                $modal.modal("refresh");
                 // _gaq.push(['_trackEvent', "showPost", 'click', uri]);
             }
         });
@@ -266,7 +291,7 @@ function init(ret){
         var header =
             $('<div class="header item" id="excellent-article-header"><span class="sub header">精選文章</span></div>')
                 .appendTo($menu);
-        ret["excellent-articles"].forEach(function(e){
+        ret["excellent-articles"].forEach(function(e, index){
             var title = e.title ? e.title : e.subject;
             var ago = moment(e.last_modified).locale("zh-tw").fromNow();
             var popularityTag = 
@@ -277,10 +302,11 @@ function init(ret){
                 .append($("<span>", {class:"ui title", text: title}))
                 .append($("<span>", {class:"ui date detail", text: ago}))
                 .data("id", e.id)
+                .data("type", "excellent-posts")
+                .data("index", index)
                 .appendTo($menu)
                 .click(showPost);
         });
-
 
     }
     /** populate the sidebar content **/
@@ -290,7 +316,7 @@ function init(ret){
         var header =
             $('<div class="header item">\n    相關文章\n</div>')
                 .appendTo($menu);
-        ret.articles.forEach(function(e){
+        ret.articles.forEach(function(e, index){
             var board_id = e.id.split(":");
             var title = e.title ? e.title : e.subject;
             var ago = moment(e.last_modified).locale("zh-tw").fromNow();
@@ -307,6 +333,8 @@ function init(ret){
                 .append($("<span>", {class:"ui title", text:title}))
                 .append($("<span>", {class:"ui date detail", text: ago}))
                 .data("id", e.id)
+                .data("type", "related-posts")
+                .data("index", index)
                 .appendTo($menu)
                 .click(showPost);
         });
@@ -324,6 +352,8 @@ function init(ret){
                 .append($("<span>", {class:"sub header", text: title}), $("<span>", {class:"ui date detail", text:ago}))
                 .appendTo($menu)
                 .data("id", id)
+                .data("type", "best-match-posts")
+                .data("index", 0)
                 .click(showPost);
 
         // fetch the post from S3
@@ -344,6 +374,8 @@ function init(ret){
                     $('<a class="item push"></a>')
                         .append($pushDiv.children())
                         .data("id", id)
+                        .data("type", "best-match-posts")
+                        .data("index", 0)
                         .appendTo($menu);
 
                 });
@@ -355,40 +387,49 @@ function init(ret){
 
     }
     // add Lock icon to the first header in the sidebar
-    $(".ui.plugin-menu .header").first().append('<i id="lock" class="icon unlock alternate"></i>');
+    var $lock = $('<i id="lock" class="icon unlock alternate" data-position="left center" ></i>');
+    $(".ui.plugin-menu .header").first().append($lock);
     setMouseOverEvent(_available);
 
     // _gaq.push(['_trackEvent', "launcherButton", 'loaded']);
 
     /** Maintain the locking function **/
-    var $lock = $("#lock");
-    // check if the sidebar has been locked by the user
-    // chrome.storage.local.get({'lock?': 'unlocked'}, function(ret) {
-        // automatically show the sidebar if the user has chosen to lock it
-        if(ret["lock?"] == 'locked' && _available){
-            $lock.removeClass('unlock').addClass('lock');
-            $menu.sidebar('show');
-            $leftLauncher.addClass('hidden');
-        }else{
-                $.later(100, this, function () {
-                    /** Fade-in the launcher **/
-                    $leftLauncher.transition('horizontal flip', '1000ms');
-                });
-        }
-    // });
+    if(ffStorage.getItem("lock") === "locked" && _available) {
+        $lock.removeClass('unlock').addClass('lock');
+        $menu.sidebar('show');
+        $leftLauncher.addClass('hidden');
+    }
+
+    var popupTimer;
     $lock.click(function(event){
+
+        if(popupTimer) {popupTimer.cancel()};
         var locked = !$lock.hasClass('lock');
         if(locked){
             $lock.removeClass('unlock').addClass('lock');
+            // _gaq.push(['_trackEvent', "lock", "lock"]);
+            ffStorage.setItem("hasLocked","true");
+            // show popup
+            $lock.popup("hide").popup("destroy").popup({"title":'套件固定展開', "on":"click"}).popup("show");
+            // hide popup in a moment
+            popupTimer = $.later(2000, this, function(){
+                $lock.popup("hide").popup("destroy");
+            })
 
         }else{
             $lock.removeClass('lock').addClass('unlock');
-        }
-        // chrome.storage.local.set({'lock?': locked? 'locked': 'unlocked'}, function(){
-        //     console.log(locked);
-        // });
-    });
+            // _gaq.push(['_trackEvent', "lock", "unlock"]);
+            ffStorage.setItem("hasUnLocked", "true");
+            // show popup
+            $lock.popup("hide").popup("destroy").popup({"title":'取消', "on":"click"}).popup("show");
+            // hide popup in a moment
+            popupTimer = $.later(2000, this, function(){
+                $lock.popup("hide").popup("destroy");
+            })
 
+        }
+        ffStorage.getItem("lock") === locked ? ffStorage.setItem("lock", "locked") : ffStorage.setItem("lock", "unlocked");
+    });
 
 }
 

@@ -23,7 +23,7 @@ pageMod.PageMod({
       /^https:\/\/.*appledaily.com.tw\/.*\/article\/.*/,
       /^http:\/\/www.ettoday.net\/news\/(\d*)\/.*htm.?.*/,
       /^https:\/\/www.ettoday.net\/news\/(\d*)\/.*htm.?.*/,
-      /http:\/\/www.stormmediagroup.com\/opencms\/.*\/detail\/.*/,
+      /^http:\/\/www.storm.mg\/article\/.*\/.*\/.*/,
       /^http:\/\/www.peoplenews.tw\/news\/.*/,
       /^http:\/\/newtalk.tw\/news\/.*/   
     ],
