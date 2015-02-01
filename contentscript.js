@@ -92,10 +92,10 @@ if(url.indexOf('yahoo') >=0) {
     launcherTopPos = 10;
 }else if(url.indexOf("storm") >= 0){
     //stormmedis
-    $headline = $('h3');
-    headlineTop = $headline.offset()["top"] + 10;
-    $articleContent = $(".newsDescBlk p, .newsDescBlk div");
-    launcherTopPos = 10;
+    $headline = $(".article_head .title-wrap .title");
+    headlineTop = $headline.offset()["top"] + 20;
+    $articleContent = $(".section_article_show article p");
+    launcherTopPos = 20;
 } else if (url.indexOf("peoplenews") >= 0) {
     // peoplenews
     $headline = $('div.news_title');
