@@ -6,7 +6,7 @@
   "這是你認識 PTT 的起點。不需要申請帳號，便可在各大新聞網站一邊看新聞，同時閱覽 PTT 的時事討論。",
   "author": "changun",
   "license": "MPL 2.0",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "icon": "data/assets/images/triplec-48.png",
   "icon64": "data/assets/images/triplec-128.png"
 }

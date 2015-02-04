@@ -98,7 +98,7 @@ if(url.indexOf('yahoo') >=0) {
     launcherTopPos = 20;
 } else if (url.indexOf("peoplenews") >= 0) {
     // peoplenews
-    $headline = $('div.news_title');
+    $headline = $('#news .news_title');
     headlineTop = $headline.offset()["top"] + 10;
     $articleContent = $("#newscontent p");
     launcherTopPos = 45;
