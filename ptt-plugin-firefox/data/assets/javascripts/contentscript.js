@@ -1,7 +1,6 @@
 // var _gaq = _gaq || [];
 // _gaq.push(['_setAccount', 'UA-58095038-1']);
 // _gaq.push(['_trackPageview']);
-var ffStorage = window.localStorage
 
 var url = new URI(window.location.href).hostname();
 // body
@@ -161,7 +160,7 @@ $body.append($modal);
 
 // show launcher
 // check if the sidebar has been locked by the user
-if(ffStorage.getItem("lock") === "unlocked" || ffStorage.getItem("lock") === null || ffStorage.getItem("lock") === false) {
+if(localStorage.getItem("lock") === "unlocked" || localStorage.getItem("lock") === null) {
     $leftLauncher.transition('horizontal flip', '1000ms');
 }
 
@@ -181,15 +180,14 @@ $menu
             $lock.popup('hide').popup('destroy')
                 .popup({html:'<div class="column"><i class="idea icon large"></i></div>'});
 
-            if ((ffStorage.getItem("hasLocked") === "false" || ffStorage.getItem("hasLocked") === null || ffStorage.getItem("hasLocked") === false) &&
-                (ffStorage.getItem("firstTime") === "true" || ffStorage.getItem("firstTime") === true || Math.random() > 0.7)) {
+            if ((localStorage.getItem("firstTime") === "true" || localStorage.getItem("firstTime") === true || localStorage.getItem("firstTime") === null)) {
 
                 $lock.popup("show");
                 $.later(3000, this, function() {
                     $lock.popup("hide");
                 });
             }
-            ffStorage.setItem("firstTime" , "false");
+            localStorage.setItem("firstTime" , "false");
         }
     });
 
@@ -393,7 +391,7 @@ function init(ret){
     // _gaq.push(['_trackEvent', "launcherButton", 'loaded']);
 
     /** Maintain the locking function **/
-    if(ffStorage.getItem("lock") === "locked" && _available) {
+    if(localStorage.getItem("lock") === "locked" && _available) {
         $lock.removeClass('unlock').addClass('lock');
         $menu.sidebar('show');
         $leftLauncher.addClass('hidden');
@@ -403,11 +401,10 @@ function init(ret){
     $lock.click(function(event){
 
         if(popupTimer) {popupTimer.cancel()};
-        var locked = !$lock.hasClass('lock');
-        if(locked){
+        var locked = $lock.hasClass('lock');
+        if(!locked){
             $lock.removeClass('unlock').addClass('lock');
             // _gaq.push(['_trackEvent', "lock", "lock"]);
-            ffStorage.setItem("hasLocked","true");
             // show popup
             $lock.popup("hide").popup("destroy").popup({"title":'套件固定展開', "on":"click"}).popup("show");
             // hide popup in a moment
@@ -418,7 +415,6 @@ function init(ret){
         }else{
             $lock.removeClass('lock').addClass('unlock');
             // _gaq.push(['_trackEvent', "lock", "unlock"]);
-            ffStorage.setItem("hasUnLocked", "true");
             // show popup
             $lock.popup("hide").popup("destroy").popup({"title":'取消', "on":"click"}).popup("show");
             // hide popup in a moment
@@ -427,7 +423,7 @@ function init(ret){
             })
 
         }
-        ffStorage.getItem("lock") === locked ? ffStorage.setItem("lock", "locked") : ffStorage.setItem("lock", "unlocked");
+        localStorage.getItem("lock") === locked ? localStorage.setItem("lock", "unlocked") : localStorage.setItem("lock", "locked");
     });
 
 }

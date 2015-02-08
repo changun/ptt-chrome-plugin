@@ -33,7 +33,6 @@ pageMod.PageMod({
         self.data.url("assets/css/bbs.css")
     ],
     contentScriptFile: [
-        self.data.url("assets/javascripts/ga.js"),
         self.data.url("assets/javascripts/jquery-2.1.3.min.js"), 
         self.data.url("assets/javascripts/jquery.mousewheel.js"),
         self.data.url("assets/javascripts/jquery.later.js"),
