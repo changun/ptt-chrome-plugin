@@ -1,7 +1,7 @@
 {
   "name" : "看看鄉民怎麼說?",
-  "version" : "1.0.26",
-  "description" : "這是你認識 PTT 的起點。不需要申請帳號，便可在各大新聞網站一邊看新聞，同時閱覽 PTT 的時事討論",
+  "version" : "1.0.27",
+  "description" : "看新聞也要看重點，即時閱覽 PTT 掌握事件關鍵，不再被紛雜的爭吵淹沒。",
   "icons" : {
     "16" : "triplec-16.png",
     "48" : "triplec-48.png",
@@ -31,9 +31,14 @@
           "https://*.appledaily.com.tw/*/article/*",
           "http://*.ettoday.net/news/*/*.htm*",
           "https://*.ettoday.net/news/*/*.htm*",
-          "http://www.storm.mg/article/*/*/*",
-          "http://www.peoplenews.tw/news/*",
-          "http://newtalk.tw/news/*"  
+          "*://www.storm.mg/article/*/*/*",
+          "*://www.storm.mg/article/*",
+          "*://www.peoplenews.tw/news/*",
+          "*://newtalk.tw/news/*",
+          "*://www.mypeople.tw/*"
+      ],
+      "exclude_globs" : [
+        "*://www.mypeople.tw/category/news/*"
       ],
       "web_accessible_resources": [
             "assets/images/*",

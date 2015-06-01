@@ -108,6 +108,12 @@ if(url.indexOf('yahoo') >=0) {
     headlineTop = $headline.offset()["top"] + 10;
     $articleContent = $(".news_ctxt_area_word");
     launcherTopPos = 10;
+} else if (url.indexOf("mypeople") >= 0 ) {
+    // mypeople
+    $headline = $('h1 span');
+    headlineTop = $headline.offset()["top"] + 10;
+    $articleContent = $('.post-inner .entry p');
+    launcherTopPos = 10;
 }
 _gaq.push(['_trackEvent', "init", url]);
 
@@ -272,7 +278,7 @@ function init(ret){
             url: uri,
             async: true,
             success: function (ret) {
-                var $postContent = $(ret).find('#main-content');
+                var $postContent = $(ret).find('#ptt-main-content');
                 $modal.find('div').remove();
                 $modal.append($postContent);
 
