@@ -278,7 +278,10 @@ function init(ret){
             url: uri,
             async: true,
             success: function (ret) {
-                var $postContent = $(ret).find('#ptt-main-content');
+                var $postContent = $(ret)
+                                    .find('#main-content')
+                                    .attr("id","ptt-main-content"); // replace id with ptt-main-content to avoid conflict
+
                 $modal.find('div').remove();
                 $modal.append($postContent);
 

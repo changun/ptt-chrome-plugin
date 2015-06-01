@@ -165,8 +165,7 @@ if(localStorage.getItem("lock") === "unlocked" || localStorage.getItem("lock") =
 }
 
 // create sidebar
-$menu
-    .sidebar({
+$menu.sidebar({
         transition       :  'overlay',
         mobileTransition : 'overlay',
         dimPage : false,
