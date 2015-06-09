@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-@import url(//fonts.googleapis.com/css?family=Inconsolata);
-
 /* ansi colors */
 .b0 { background-color: #000; }
 .b1 { background-color: #b00; }
@@ -33,7 +31,7 @@
 
 
 /* for article*/
-#main-content {
+#ptt-main-content {
     position: relative;
     background-color: #000;
     white-space: pre;
@@ -48,22 +46,22 @@
     min-width: 600px;
     max-width: 1200px;
 }
-#main-content .article-metaline {
+#ptt-main-content .article-metaline {
     margin: 0;
     padding: 0;
     background-color: #008;
 }
-#main-content .article-meta-value {
+#ptt-main-content .article-meta-value {
     padding: 0 1ex;
     background-color: #008;
     color: #999;
 }
-#main-content .article-meta-tag {
+#ptt-main-content .article-meta-tag {
     padding: 0 1ex;
     background-color: #999;
     color: #008;
 }
-#main-content .article-metaline-right {
+#ptt-main-content .article-metaline-right {
     position: absolute;
     right: 0;
     top: 0;

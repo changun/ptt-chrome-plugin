@@ -107,6 +107,12 @@ if(url.indexOf('yahoo') >=0) {
     headlineTop = $headline.offset()["top"] + 10;
     $articleContent = $(".news_ctxt_area_word");
     launcherTopPos = 10;
+} else if (url.indexOf("mypeople") >= 0 ) {
+    // mypeople
+    $headline = $('h1 span');
+    headlineTop = $headline.offset()["top"] + 10;
+    $articleContent = $('.post-inner .entry p');
+    launcherTopPos = 10;
 }
 
 /** the parameters that will be sent to the search engine **/
@@ -147,15 +153,15 @@ $leftLauncher.css({top: headlineTop});
 
 // sidebar menu
 var $menu = 
-    $("<div>", {class:"ui vertical plugin-menu sidebar inverted very wide right"});
+    $("<div>", {class:"ui vertical plugin-menu menu sidebar inverted very wide right"});
 
 // modal
 var $modal =
     $("<div>", {class:"ui modal large", id:"ptt-modal"})
     .append($("<i>", {class:"close icon"}));
 // append the DOMs to the body
-$body.append($menu);
 $body.append($leftLauncher);
+$body.append($menu);
 $body.append($modal);
 
 // show launcher
@@ -220,7 +226,7 @@ var setMouseOverEvent = function(isAvailable){
 
 // set on scroll listener to dynamically adjust the position of the launcher
 $(window).on("scroll", function(e) {
-    var scrollTop = $body.scrollTop();
+    var scrollTop = $(this).scrollTop();
     if (headlineTop - scrollTop <=  launcherTopPos && !$leftLauncher.hasClass('fixed-top')) {
         $leftLauncher.addClass("fixed-top");
         $leftLauncher.css({top: launcherTopPos});
@@ -269,7 +275,10 @@ function init(ret){
             async: true,
             jsonp: false,
             success: function (ret) {
-                var $postContent = $(ret).find('#main-content');
+                var $postContent = $(ret)
+                                    .find('#main-content')
+                                    .attr("id","ptt-main-content"); // replace id with ptt-main-content to avoid conflict
+
                 $modal.find('div').remove();
                 $modal.append($postContent);
 
@@ -280,13 +289,13 @@ function init(ret){
         });
 
     };
-    /** populate the sidebar content **/
+    /** populate the sidebar menu content (excellent article)**/
     // populate related articles
     if(ret["excellent-articles"] && ret["excellent-articles"].length > 0){
         _available = true;
         var header =
             $('<div class="header item" id="excellent-article-header"><span class="sub header">精選文章</span></div>')
-                .appendTo($menu);
+            .appendTo($menu);
         ret["excellent-articles"].forEach(function(e, index){
             var title = e.title ? e.title : e.subject;
             var ago = moment(e.last_modified).locale("zh-tw").fromNow();
@@ -305,7 +314,7 @@ function init(ret){
         });
 
     }
-    /** populate the sidebar content **/
+    /** populate the sidebar menu content **/
     // populate related articles
     if(ret.articles.length > 0){
         _available = true;
@@ -334,8 +343,6 @@ function init(ret){
                 .appendTo($menu)
                 .click(showPost);
         });
-
-
     }
     // populate comment
     if(ret["best-match"]){
@@ -411,6 +418,7 @@ function init(ret){
                 $lock.popup("hide").popup("destroy");
             })
 
+
         }else{
             $lock.removeClass('lock').addClass('unlock');
             // _gaq.push(['_trackEvent', "lock", "unlock"]);
@@ -420,10 +428,8 @@ function init(ret){
             popupTimer = $.later(2000, this, function(){
                 $lock.popup("hide").popup("destroy");
             })
-
         }
-        localStorage.getItem("lock") === locked ? localStorage.setItem("lock", "unlocked") : localStorage.setItem("lock", "locked");
+        locked ? localStorage.setItem("lock", "unlocked") : localStorage.setItem("lock", "locked");
     });
-
 }
 
