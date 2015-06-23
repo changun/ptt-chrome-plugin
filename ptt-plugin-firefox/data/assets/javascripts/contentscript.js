@@ -66,10 +66,10 @@ if(url.indexOf('yahoo') >=0) {
 
 }else if (url.indexOf('udn') >= 0){
     // udn
-    $headline = $('.story_title,#story_art_title');
-    headlineTop = $headline.position()["top"];
+    $headline = $('#story_art_title');
+    headlineTop = $headline.position()["top"] + 300;
     $articleContent = $('.story p,#story_body p');
-    launcherTopPos = 40;
+    launcherTopPos = 55;
 
 }else if (url.indexOf('ltn') >= 0){
     // liberty
@@ -92,7 +92,7 @@ if(url.indexOf('yahoo') >=0) {
 }else if(url.indexOf("storm") >= 0){
     //stormmedis
     $headline = $(".article_head .title-wrap .title");
-    headlineTop = $headline.offset()["top"] + 20;
+    headlineTop = $headline.offset()["top"];
     $articleContent = $(".section_article_show article p");
     launcherTopPos = 20;
 } else if (url.indexOf("peoplenews") >= 0) {
@@ -103,9 +103,9 @@ if(url.indexOf('yahoo') >=0) {
     launcherTopPos = 45;
 } else if (url.indexOf("newtalk") >= 0) {
     // newtalks
-    $headline = $('.news_cont_area_tit label');
+    $headline = $('#left_column .content_title');
     headlineTop = $headline.offset()["top"] + 10;
-    $articleContent = $(".news_ctxt_area_word");
+    $articleContent = $("#news_content txt");
     launcherTopPos = 10;
 } else if (url.indexOf("mypeople") >= 0 ) {
     // mypeople
