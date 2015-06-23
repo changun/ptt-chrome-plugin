@@ -67,7 +67,7 @@ if(url.indexOf('yahoo') >=0) {
 
 }else if (url.indexOf('udn') >= 0){
     // udn
-    $headline = $('.story_title,#story_art_title');
+    $headline = $('#story_art_title');
     headlineTop = $headline.offset()["top"];
     $articleContent = $('.story p,#story_body p');
     launcherTopPos = 40;
@@ -104,9 +104,9 @@ if(url.indexOf('yahoo') >=0) {
     launcherTopPos = 45;
 } else if (url.indexOf("newtalk") >= 0) {
     // newtalks
-    $headline = $('.news_cont_area_tit label');
+    $headline = $('#left_column .content_title');
     headlineTop = $headline.offset()["top"] + 10;
-    $articleContent = $(".news_ctxt_area_word");
+    $articleContent = $("#news_content txt");
     launcherTopPos = 10;
 } else if (url.indexOf("mypeople") >= 0 ) {
     // mypeople
