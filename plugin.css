@@ -105,3 +105,8 @@
     width: 1000px;
     background-color: black;
 }
+
+#ptt-main-content #fb-like{
+    float: right;
+    margin-top: 10px;
+}

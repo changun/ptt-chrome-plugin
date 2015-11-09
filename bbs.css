@@ -48,6 +48,10 @@
     min-width: 600px;
     max-width: 1200px;
 }
+#ptt-main-content img{
+    max-width: 100%;
+    max-height: 70%;
+}
 #ptt-main-content .article-metaline {
     margin: 0;
     padding: 0;
