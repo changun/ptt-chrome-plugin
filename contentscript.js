@@ -21,7 +21,7 @@ var sharePageUrl = function(id){
     var board_id = id.split(":");
     var board = board_id[0];
     var file = board_id[1] + ".html";
-    return "https://www.facebook.com/share.php?u=https://www.ptt.rocks/share/" + board + '/' + file;
+    return "https://www.ptt.rocks/share/" + board + '/' + file;
 };
 
 
@@ -309,11 +309,7 @@ if($headline && $articleContent) {
                         $postContent
                             .find('.article-metaline')
                             .last();
-
-
-                    $('<button id="fb-like" class="ui facebook button tiny fb-like" style="padding: 5px;margin-top: 10px"><i class="facebook  square icon"></i>分享</button>')
-                        .insertAfter($lastMetaLine)
-                        .click(function(){
+                    var sharePopup = function(url){
                             var width = 600, height=400;
                             var leftPosition, topPosition;
                             //Allow for borders.
@@ -321,13 +317,24 @@ if($headline && $articleContent) {
                             //Allow for title and status bars.
                             topPosition = (window.screen.height / 2) - ((height / 2) + 50);
                             var windowFeatures = "status=no,height=" + height + ",width=" + width + ",resizable=yes,left=" + leftPosition + ",top=" + topPosition + ",screenX=" + leftPosition + ",screenY=" + topPosition + ",toolbar=no,menubar=no,scrollbars=no,location=no,directories=no";
-                            window.open(sharePageUrl($item.data('id')),'sharer', windowFeatures);
-                            return false;}
-                    );
+                            window.open("https://www.facebook.com/share.php?u=" + url,'sharer', windowFeatures);
+                            _gaq.push(['_trackEvent', "share-post", type]);
+                            return false;
+                    };
+                    $('<button id="fb-like" class="ui facebook button big fb-like sticky" style="padding: 5px;margin-top: 10px"><i class="facebook  square icon"></i>分享</button>')
+                        .insertAfter($lastMetaLine)
+                        .click(function(){
+                            sharePopup(sharePageUrl($item.data('id')))
+                        });
+
+
+                    $postContent.find(".f2 a")
+                        .attr("href", sharePageUrl($item.data('id')))
 
 
                     $modal.find('div').remove();
                     $modal.append($postContent);
+
 
 
                     console.log($modal.modal('can fit'));
